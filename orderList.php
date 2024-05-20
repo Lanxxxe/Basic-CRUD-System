@@ -12,14 +12,13 @@ include('header.php');
 <body>
 <?php include('navbar.php'); ?>
 <div class="container">
-	<h1 class="page-header text-center">SALES</h1>
+	<h1 class="page-header text-center">Order List</h1>
 	<table class="table table-striped table-bordered">
 		<thead>
 			<th>Date</th>
 			<th>Customer</th>
 			<th>Processed By</th>
-			<th>Total Bill</th>
-			<th>Transaction Type</th>
+ 			<th>Transaction Type</th>
 			<th>Action</th>
 		</thead>
 		<tbody>
@@ -36,9 +35,8 @@ include('header.php');
 						<td><?php echo htmlspecialchars($row['DatePurchase']); ?></td>
 						<td><?php echo htmlspecialchars($row['CustomerName']); ?></td>
 						<td><?php echo htmlspecialchars($row['FirstName']); ?></td>
-						<td>&#8369; <?php echo number_format($row['TotalBill'], 2); ?></td>
 						<td><?php echo htmlspecialchars($row['TransactionType']); ?></td>
-						<td><a href="#details<?php echo $row['PurchaseDetailsID']; ?>" data-toggle="modal" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search"></span> View</a>
+						<td><a href="#details<?php echo $row['PurchaseDetailsID']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Remove</a>
 							<?php include('sales_modal.php'); ?>
 						</td>
 					</tr>

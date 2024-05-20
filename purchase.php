@@ -49,9 +49,11 @@ if(isset($_SESSION['username'])) {
 
             // Commit the transaction
             $conn->commit();
-
-            // Redirect to a confirmation page or display a success message
-            echo '<script>window.alert("Purchase Successfully");</script>';
+            ?>
+            <script>
+            window.alert("Purchase Successfully");
+            </script>
+            <?php
             header('Location: sales.php');
         } catch (Exception $e) {
             // Rollback the transaction in case of error

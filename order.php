@@ -1,11 +1,19 @@
-<?php include('header.php'); 
-    session_start();
+<?php 
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit();
+}
+
+include('header.php'); 
+    
 ?>
 
 <body>
-    <?php include('navbar.php'); ?>
+    <?php include('navbar.php'); 
+    ?>
     <div class="container">
-        <h1 class="page-header text-center">ORDER</h1>
+        <h1 class="page-header text-center">ORDER  </h1>
         <form action="" method="GET">
             <div class="input-group mb-3">
                 <input type="text" name="search" class="form-control" value="<?php if (isset($_GET['search'])) {echo htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8');} ?>" placeholder="search">

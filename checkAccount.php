@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['accountID'] = $accountID;
 
             header("Location: home.php");
+            exit();
         } else {
             echo "Please Check Password";
         }

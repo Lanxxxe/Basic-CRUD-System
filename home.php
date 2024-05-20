@@ -1,11 +1,20 @@
-<?php include('header.php'); 
-    session_start();
+<?php 
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit();
+}
+
+include('header.php'); 
+    
 ?>
 
 <body>
-    <?php include('navbar.php'); ?>
+    <?php include('navbar.php'); 
+    ?>
     <div class="container">
-        <h1 class="page-header text-center">MENU</h1>
+        <h1 class="page-header text-center">MENU </h1>
         <ul class="nav nav-tabs">
             <?php
             $sql = "SELECT * FROM category ORDER BY CategoryID ASC";

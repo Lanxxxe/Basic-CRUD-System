@@ -24,9 +24,10 @@
             <li><a href="product.php">Products</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="category.php">Category</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            
           </ul>
         </li>
+        <li><a href="logout.php">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
