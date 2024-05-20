@@ -1,0 +1,23 @@
+.search-container {
+    border: 1px solid black;
+    display: flex;
+    align-items: start;
+    justify-items: start;
+    gap: 10;
+}
+.container {
+    margin-bottom: 5vh;
+}
+
+#login-container {
+    height: 100dvh;
+}
+
+#form-container {
+    /* border: 1px solid black; */
+}
+.form-floating {
+    /* border: 1px solid black; */
+    width: 40dvw;
+}
+
