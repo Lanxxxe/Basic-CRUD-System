@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2024 at 09:59 AM
+-- Generation Time: May 21, 2024 at 03:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `administrator` (
 --
 
 INSERT INTO `administrator` (`AccountID`, `FirstName`, `LastName`, `AdminUsername`, `AdminPassword`) VALUES
-(1, 'Sample Name', 'Sample LastName', 'sampleUsername', 'samplePassword');
+(1, 'Sample Name', 'Sample LastName', 'sampleUsername', 'samplePassword'),
+(2, 'Rico', 'Parena', 'ricoparena', 'ricoparena123');
 
 -- --------------------------------------------------------
 
@@ -58,10 +59,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`CategoryID`, `CategoryName`) VALUES
-(1, 'BREAKFAST'),
-(2, 'LUNCH'),
-(3, 'DINNER'),
-(4, 'BEVERAGES');
+(7, 'Kakanin'),
+(8, 'Latik'),
+(9, 'Sweets');
 
 -- --------------------------------------------------------
 
@@ -82,10 +82,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ProductID`, `CategoryID`, `ProductName`, `Price`, `ImagePath`) VALUES
-(1, 1, 'Smartphone', 699, 'images/smartphone.jpg'),
-(2, 1, 'Laptop', 999, 'images/laptop.jpg'),
-(3, 2, 'Novel', 15, 'images/novel.jpg'),
-(4, 3, 'T-shirt', 20, 'images/tshirt.jpg');
+(11, 9, 'Puto', 50, '');
 
 -- --------------------------------------------------------
 
@@ -95,19 +92,24 @@ INSERT INTO `product` (`ProductID`, `CategoryID`, `ProductName`, `Price`, `Image
 
 CREATE TABLE `productpurchasedetails` (
   `ProductPurchaseDetailsID` int(11) NOT NULL,
-  `ProductID` int(11) DEFAULT NULL,
+  `ProductName` text DEFAULT NULL,
   `PurchaseDetailsID` int(11) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
-  `SubTotal` int(11) DEFAULT NULL
+  `SubTotal` int(11) DEFAULT NULL,
+  `ProductPrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productpurchasedetails`
 --
 
-INSERT INTO `productpurchasedetails` (`ProductPurchaseDetailsID`, `ProductID`, `PurchaseDetailsID`, `Quantity`, `SubTotal`) VALUES
-(1, 1, 1, 1, 699),
-(2, 3, 2, 1, 15);
+INSERT INTO `productpurchasedetails` (`ProductPurchaseDetailsID`, `ProductName`, `PurchaseDetailsID`, `Quantity`, `SubTotal`, `ProductPrice`) VALUES
+(28, 'Suman', 19, 1, 900, 900),
+(29, 'Puto', 19, 1, 50, 50),
+(30, 'Malagkit', 20, 1, 100, 100),
+(31, 'Puto BumBum', 20, 2, 240, 120),
+(32, 'Suman', 21, 1, 900, 900),
+(33, 'Puto', 21, 3, 150, 50);
 
 -- --------------------------------------------------------
 
@@ -127,8 +129,9 @@ CREATE TABLE `purchasebill` (
 --
 
 INSERT INTO `purchasebill` (`PurchaseID`, `PurchaseDetailsID`, `DatePurchase`, `TotalBill`) VALUES
-(1, 1, '2023-05-15', 714),
-(2, 2, '2023-05-16', 15);
+(16, 19, '2024-05-23', 950),
+(17, 20, '2024-06-08', 340),
+(18, 21, '2024-06-06', 1050);
 
 -- --------------------------------------------------------
 
@@ -148,8 +151,9 @@ CREATE TABLE `purchasedetails` (
 --
 
 INSERT INTO `purchasedetails` (`PurchaseDetailsID`, `CustomerName`, `TransactionType`, `AccountID`) VALUES
-(1, 'Alice Smith', 'Delivery', 1),
-(2, 'Bob Johnson', 'Pickup', 1);
+(19, 'Nathan', 'Pick-Up', 2),
+(20, 'Alyssa', 'Pick-Up', 2),
+(21, 'Eloisa', 'Delivery', 2);
 
 --
 -- Indexes for dumped tables
@@ -179,7 +183,7 @@ ALTER TABLE `product`
 --
 ALTER TABLE `productpurchasedetails`
   ADD PRIMARY KEY (`ProductPurchaseDetailsID`),
-  ADD KEY `ProductID` (`ProductID`),
+  ADD KEY `ProductID` (`ProductName`(768)),
   ADD KEY `PurchaseDetailsID` (`PurchaseDetailsID`);
 
 --
@@ -204,37 +208,37 @@ ALTER TABLE `purchasedetails`
 -- AUTO_INCREMENT for table `administrator`
 --
 ALTER TABLE `administrator`
-  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `productpurchasedetails`
 --
 ALTER TABLE `productpurchasedetails`
-  MODIFY `ProductPurchaseDetailsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ProductPurchaseDetailsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `purchasebill`
 --
 ALTER TABLE `purchasebill`
-  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `purchasedetails`
 --
 ALTER TABLE `purchasedetails`
-  MODIFY `PurchaseDetailsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PurchaseDetailsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
@@ -250,7 +254,6 @@ ALTER TABLE `product`
 -- Constraints for table `productpurchasedetails`
 --
 ALTER TABLE `productpurchasedetails`
-  ADD CONSTRAINT `productpurchasedetails_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`),
   ADD CONSTRAINT `productpurchasedetails_ibfk_2` FOREIGN KEY (`PurchaseDetailsID`) REFERENCES `purchasedetails` (`PurchaseDetailsID`);
 
 --
