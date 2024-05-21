@@ -21,30 +21,47 @@ include('header.php');
  			<th>Transaction Type</th>
 			<th>Action</th>
 		</thead>
-		<tbody>
-			<?php 
-				$sql = "SELECT pb.PurchaseID, pb.DatePurchase, pd.CustomerName, a.FirstName, pb.TotalBill, pd.TransactionType, pd.PurchaseDetailsID 
-					FROM PurchaseDetails pd 
-					JOIN PurchaseBill pb ON pd.PurchaseDetailsID = pb.PurchaseDetailsID 
-					JOIN Administrator a ON pd.AccountID = a.AccountID 
-					ORDER BY pb.PurchaseID DESC";
-				$query = $conn->query($sql);
-				while ($row = $query->fetch_assoc()) {
-					?>
-					<tr>
-						<td><?php echo htmlspecialchars($row['DatePurchase']); ?></td>
-						<td><?php echo htmlspecialchars($row['CustomerName']); ?></td>
-						<td><?php echo htmlspecialchars($row['FirstName']); ?></td>
-						<td><?php echo htmlspecialchars($row['TransactionType']); ?></td>
-						<td><a href="#details<?php echo $row['PurchaseDetailsID']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Remove</a>
-							<?php include('sales_modal.php'); ?>
-						</td>
-					</tr>
-					<?php
-				}
-			?>
+		<tbody id="tableBody">
 		</tbody>
 	</table>
 </div>
+
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', () => {
+		var tableBody = document.querySelector('#tableBody');
+		tableBody.innerHTML = '';
+		var transactionDetails = JSON.parse(localStorage.getItem('orderDetails')) || [];
+		const renderTable = () => {
+        tableBody.innerHTML = '';
+        transactionDetails.forEach((values, index) => {
+            let content = `
+            <tr data-index="${index}"> 
+                <td>${values['dateOfPurchase']}</td>
+                <td>${values['customerName']}</td>
+                <td>${values['adminFirstName']}</td>
+                <td>${values['transactionType']}</td>
+                <td><button class="btn btn-primary delete-button">Complete</button></td>
+            </tr>
+            `;
+            tableBody.innerHTML += content;
+        });
+
+        // Add event listeners for delete buttons
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                var row = this.closest('tr');
+                var index = row.getAttribute('data-index');
+                transactionDetails.splice(index, 1);
+                localStorage.setItem('orderDetails', JSON.stringify(transactionDetails));
+                renderTable(); // Re-render the table
+            });
+        });
+    }
+
+    // Initial render
+    renderTable();
+	})
+</script>
 </body>
 </html>

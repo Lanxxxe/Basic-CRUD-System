@@ -137,7 +137,8 @@ include('header.php');
             const total = item.price * item.quantity;
             totalCartValue += total;
 
-            let row = `<tr id="item-${productId}">
+            let row = 
+                `<tr id="item-${productId}">
                 <td>${item.productName}</td>
                 <td>P ${item.price.toFixed(2)}</td>
                 <td>${item.quantity}</td>
@@ -149,6 +150,26 @@ include('header.php');
 
         // Update the total cart value display
         document.getElementById('total-cart-value').innerText = totalCartValue.toFixed(2);
+    }
+
+    // Function to save order details to localStorage
+    function saveOrderDetails() {
+        const newOrder = {
+            dateOfPurchase: document.querySelector('input[name="TransactionDate"]').value,
+            customerName: document.querySelector('input[name="CustomerName"]').value,
+            transactionType: document.querySelector('select[name="TransactionType"]').value,
+            adminFirstName: '<?php echo $_SESSION['username']; ?>',
+            cart: cart
+        };
+
+        // Retrieve existing order details
+        let orderDetails = JSON.parse(localStorage.getItem('orderDetails')) || [];
+
+        // Append the new order
+        orderDetails.push(newOrder);
+
+        // Save back to localStorage
+        localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
     }
 
     // Function to update the hidden input field with the cart data and save to localStorage
@@ -180,6 +201,7 @@ include('header.php');
     // Event listener for the 'Place Order' button
     document.getElementById('orderForm').addEventListener('submit', function() {
         updateCartData(); // Ensure cart data is up-to-date before submitting
+        saveOrderDetails(); // Save order details to localStorage
     });
 
     // Event listener for delete buttons
@@ -195,8 +217,7 @@ include('header.php');
     // Call updateCartTable to display cart items on page load
     updateCartTable();
 </script>
-
-
+    
 </body>
 
 </html>

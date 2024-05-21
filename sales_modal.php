@@ -22,9 +22,8 @@
                         </thead>
                         <tbody>
                             <?php
-                                $sql = "SELECT p.ProductName, p.Price, ppd.Quantity, ppd.SubTotal 
+                                $sql = "SELECT ppd.ProductName, ppd.ProductPrice, ppd.Quantity, ppd.SubTotal 
                                     FROM ProductPurchaseDetails ppd 
-                                    JOIN Product p ON ppd.ProductID = p.ProductID 
                                     JOIN PurchaseDetails pd ON ppd.PurchaseDetailsID = pd.PurchaseDetailsID 
                                     JOIN PurchaseBill pb ON pd.PurchaseDetailsID = pb.PurchaseDetailsID 
                                     JOIN Administrator a ON pd.AccountID = a.AccountID 
@@ -34,7 +33,7 @@
                             ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($drow['ProductName']); ?></td>
-                                <td class="text-right">&#8369; <?php echo number_format($drow['Price'], 2); ?></td>
+                                <td class="text-right">&#8369; <?php echo number_format($drow['ProductPrice'], 2); ?></td>
                                 <td><?php echo htmlspecialchars($drow['Quantity']); ?></td>
                                 <td class="text-right">&#8369; <?php echo number_format($drow['SubTotal'], 2); ?></td>
                             </tr>

@@ -25,14 +25,14 @@ if(isset($_SESSION['username'])) {
             $stmt->close();
 
             // Insert into ProductPurchaseDetails table
-            $stmt = $conn->prepare("INSERT INTO ProductPurchaseDetails (ProductID, PurchaseDetailsID, Quantity, Subtotal) VALUES (?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO ProductPurchaseDetails (ProductName, ProductPrice, PurchaseDetailsID, Quantity, Subtotal) VALUES (?, ?, ?, ?, ?)");
             $TotalBill = 0;
             foreach ($cartData as $productId => $item) {
                 $quantity = $item['quantity'];
                 $price = $item['price'];
                 $subtotal = $price * $quantity;
                 $TotalBill += $subtotal;
-                $stmt->bind_param("iiid", $productId, $orderId, $quantity, $subtotal);
+                $stmt->bind_param("siiid", $item['productName'], $price, $orderId, $quantity, $subtotal);
                 if (!$stmt->execute()) {
                     throw new Exception($stmt->error);
                 }
@@ -47,13 +47,14 @@ if(isset($_SESSION['username'])) {
             }
             $stmt->close();
 
+            echo "
+            <script>
+            window.alert('Purchase Successfully')
+            </script>";
+
             // Commit the transaction
             $conn->commit();
-            ?>
-            <script>
-            window.alert("Purchase Successfully");
-            </script>
-            <?php
+            
             header('Location: sales.php');
         } catch (Exception $e) {
             // Rollback the transaction in case of error

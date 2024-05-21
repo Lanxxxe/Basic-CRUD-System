@@ -48,5 +48,12 @@ include('header.php');
 		</tbody>
 	</table>
 </div>
+
+	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', () => {
+		localStorage.removeItem('cart');
+	})
+
+	</script>
 </body>
 </html>
